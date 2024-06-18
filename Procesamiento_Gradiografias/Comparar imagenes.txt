@@ -1,0 +1,55 @@
+55  53                 56 14
+
+55.243.946,1 seg
+
+920.732,435 min
+
+15.345,54 h
+639,3975 dias
+
+
+MAE:
+1.315.332 seg
+21.922 min
+365 horas
+15 dias
+
+1 dia
+86.400 seg
+/0,05  -> 337 imágenes
+
+El principal cuello de botella en tu código es la cantidad de veces que calculas el SSIM (Structural Similarity Index) entre pares de imágenes. Actualmente, estás calculando el SSIM entre todas las imágenes para cada imagen individual, lo que resulta en un algoritmo de complejidad cuadrática O(n^2). Esto puede ser extremadamente lento para una gran cantidad de imágenes.
+
+Si necesitas un método más rápido para calcular la similitud entre dos imágenes que el SSIM, puedes considerar utilizar otros enfoques como la diferencia estructural (Structural Difference, SD), la diferencia absoluta (Mean Absolute Error, MAE), la diferencia cuadrática (Mean Squared Error, MSE), o histogramas de color.
+
+Aquí te muestro cómo podrías implementar algunos de estos métodos en tu código:
+
+Diferencia Absoluta (MAE):
+python
+Copy code
+def calculate_mae(image1, image2):
+    return np.mean(np.abs(image1 - image2))
+
+# En el bucle de cálculo de similitud:
+score = calculate_mae(archivo_i[k], archivo_j[k])
+Diferencia Cuadrática (MSE):
+python
+Copy code
+def calculate_mse(image1, image2):
+    return np.mean((image1 - image2) ** 2)
+
+# En el bucle de cálculo de similitud:
+score = calculate_mse(archivo_i[k], archivo_j[k])
+Histogramas de Color:
+python
+Copy code
+from skimage import exposure
+
+def calculate_hist_similarity(image1, image2):
+    hist1, _ = exposure.histogram(image1)
+    hist2, _ = exposure.histogram(image2)
+    return np.sum(np.minimum(hist1, hist2)) / np.sum(np.maximum(hist1, hist2))
+
+# En el bucle de cálculo de similitud:
+score = calculate_hist_similarity(archivo_i[k], archivo_j[k])
+Estos enfoques pueden ser más rápidos que el SSIM, pero es importante tener en cuenta que cada uno tiene sus propias ventajas y limitaciones dependiendo del tipo de imágenes que estés utilizando y el nivel de precisión requerido. Experimenta con diferentes métodos para encontrar el que mejor se adapte a tus necesidades de velocidad y precisión.
