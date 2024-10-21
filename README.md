@@ -19,6 +19,17 @@ The objective was to achieve the highest possible accuracy in image detection an
 
 The results show that two of the proposed architectures outperformed existing CAD (computer-aided detection) systems currently used by radiologists for breast cancer detection. This demonstrates the potential of Deep Learning techniques to make a significant contribution to medical diagnosis.
 
+### Performance Comparison of Neural Networks
+
+| **Neural Network**       | **Base Data**                                | **Data Augmentation**                          | **Normal Precision (%)** | **Benign & Cancer Precision (%)** |
+|--------------------------|----------------------------------------------|------------------------------------------------|--------------------------|-----------------------------------|
+| **Dense UNet3D**         | Loss: 0.0345 <br> Accuracy: 97.02            | Loss: 0.0945 <br> Accuracy: 94.43              | Base: 99.69 <br> DA: 99.67 | Base: 86.18 <br> DA: 65.96         |
+| **Parallel UNet**        | Loss: 0.0385 <br> Accuracy: 96.76            | Loss: 0.0641 <br> Accuracy: 94.56              | Base: 99.72 <br> DA: 99.44 | Base: 72.68 <br> DA: 73.26         |
+| **Parallel InceptionV3** | Loss: 0.0286 <br> Accuracy: 98.87            | Loss: 0.0238 <br> Accuracy: 98.83              | Base: 99.97 <br> DA: 99.87 | Base: 91.75 <br> DA: 94.81         |
+| **Parallel ResNetV2**    | Loss: 0.0272 <br> Accuracy: 98.33            | Loss: 0.0350 <br> Accuracy: 98.08              | Base: 99.94 <br> DA: 99.87 | Base: 91.25 <br> DA: 92.31         |
+
+*Table 1: Performance comparison of different neural networks on two datasets, showing precision for the normal class and precision for the benign and cancer classes.*
+
 ## Keywords
 
 Breast cancer detection, Deep Learning, machine learning, *fine-tuning*.
